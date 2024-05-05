@@ -7,9 +7,9 @@ DateTime
 matplotlib
 plyfile
 HTML4Vision
-timm
 tensorboardX
 imgaug
 iopath
 imagecorruptions
-mmcv
+timm
+termcolor

@@ -28,7 +28,7 @@ def load_from_annos(anno_path):
     return datas
 
 def load_data(path: str):
-    rgbs = glob.glob(path + '/*.jpg') + glob.glob(path + '/*.png')
+    rgbs = glob.glob(path + '/*.jpg') + glob.glob(path + '/*.JPG')
     #intrinsic =  [835.8179931640625, 835.8179931640625, 961.5419921875, 566.8090209960938] #[721.53769, 721.53769, 609.5593, 172.854]
     data = [{'rgb': i, 'depth': None, 'intrinsic': None, 'filename': os.path.basename(i), 'folder': i.split('/')[-3]} for i in rgbs]
     return data
