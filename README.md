@@ -1,3 +1,8 @@
+## download pre-tained models 
+1. Download model from https://drive.google.com/file/d/1YfmvXwpWmhLg3jSxnhT7LvY0yawlXcr_/view
+
+2. Put the downloaded .pth file into "weight" folder
+
 ## How to run
 1. First you need to run the Docker engine
 
