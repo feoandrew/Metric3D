@@ -16,10 +16,6 @@
 
 ## How to ensure that everything is ok
 
-1. In the "docker_output" folder yow need to navigate vit.raft5.small/"Timstamp_folder"/vis/data
+1. Run tun_validation.bat 
 
-2. You need to copy file named HYPERLAPSE_0020_merge.jpg into the "test" folder is the repository
-
-3. Run tun_test.bat 
-
-4. Check result.jpg file is should be black.
+2. Check result.jpg file is should be full black.
