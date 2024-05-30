@@ -14,8 +14,8 @@
 
 5. Check the results in "docker_output" folder
 
-## How to ensure that everything is ok
+## How to run smoke test
 
-1. Run tun_validation.bat 
+1. Run run_validation.bat 
 
 2. Check result.jpg file is should be full black.
