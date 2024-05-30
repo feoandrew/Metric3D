@@ -3,6 +3,7 @@ import os.path as osp
 import cv2
 import time
 import sys
+import valid_images as vi
 CODE_SPACE=os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(CODE_SPACE)
 import argparse
@@ -31,10 +32,10 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Train a segmentor')
     parser.add_argument('config', help='train config file path')
     parser.add_argument('--show-dir', help='the dir to save logs and visualization results')
+    parser.add_argument('--valid_dir', help='the dir to compare results')
     parser.add_argument('--load-from', help='the checkpoint file to load weights from')
     parser.add_argument('--node_rank', type=int, default=0)
     parser.add_argument('--nnodes', type=int, default=1, help='number of nodes')
-    parser.add_argument('--options', nargs='+', action=DictAction, help='custom options')
     parser.add_argument('--launcher', choices=['None', 'pytorch', 'slurm', 'mpi', 'ror'], default='slurm', help='job launcher')
     parser.add_argument('--test_data_path', default='None', type=str, help='the path of test data')
     args = parser.parse_args()
@@ -44,8 +45,9 @@ def main(args):
     os.chdir(CODE_SPACE)
     cfg = Config.fromfile(args.config)
     
-    if args.options is not None:
-        cfg.merge_from_dict(args.options)
+    
+
+ 
         
     # show_dir is determined in this priority: CLI > segment in file > filename
     if args.show_dir is not None:
@@ -107,6 +109,15 @@ def main(args):
             main_worker(local_rank, cfg, args.launcher, test_data)
         else:
             mp.spawn(main_worker, nprocs=cfg.dist_params.num_gpus_per_node, args=(cfg, args.launcher, test_data))
+    
+   
+    if(args.valid_dir is not None):
+        vi.compare_validation_images(cfg.show_dir+'/vis/image_merge.jpg', args.valid_dir+'/image_validation.jpg', cfg.show_dir+'/vis/image_result.jpg')
+   
+
+    # result.getbbox() в данном случае вернет (0, 0, 888, 666)
+    
+    
         
 def main_worker(local_rank: int, cfg: dict, launcher: str, test_data: list):
     if cfg.distributed:
@@ -150,9 +161,10 @@ def main_worker(local_rank: int, cfg: dict, launcher: str, test_data: list):
         cfg.distributed,
         local_rank
     )
+
     
 if __name__ == '__main__':
     args = parse_args()
     timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
     args.timestamp = timestamp
-    main(args)    
+    main(args)

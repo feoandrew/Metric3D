@@ -288,7 +288,7 @@ def do_scalecano_test_with_custom_data(
             print(gt_depth[gt_depth != 0].median() / pred_depth[gt_depth != 0].median(), )
         
         if i % save_interval == 0:
-            os.makedirs(osp.join(save_imgs_dir, an['folder']), exist_ok=True)
+            os.makedirs(save_imgs_dir, exist_ok=True)
             rgb_torch = torch.from_numpy(rgb_origin).to(pred_depth.device).permute(2, 0, 1)
             mean = torch.tensor([123.675, 116.28, 103.53]).float()[:, None, None].to(rgb_torch.device)
             std = torch.tensor([58.395, 57.12, 57.375]).float()[:, None, None].to(rgb_torch.device)
@@ -299,7 +299,7 @@ def do_scalecano_test_with_custom_data(
                 pred_depth,
                 gt_depth if gt_depth is not None else torch.ones_like(pred_depth, device=pred_depth.device),
                 rgb_torch,
-                osp.join(an['folder'], an['filename']),
+                an['filename'],
                 save_imgs_dir,
             )
             #save_raw_imgs(pred_depth.detach().cpu().numpy(), rgb_torch, osp.join(an['folder'], an['filename']), save_imgs_dir, 1000.0)
@@ -345,7 +345,7 @@ def do_scalecano_test_with_custom_data(
                                     pred_normal, 
                                     gt_normal if gt_normal is not None else torch.ones_like(pred_normal, device=pred_normal.device),
                                     rgb_torch, # data['input'], 
-                                    osp.join(an['folder'], 'normal_'+an['filename']), 
+                                    osp.join('normal_'+an['filename']), 
                                     save_imgs_dir,
                                     )
 

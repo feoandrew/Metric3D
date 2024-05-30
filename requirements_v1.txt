@@ -4,7 +4,7 @@ opencv-python
 numpy
 Pillow
 DateTime
-matplotlib
+matplotlib==3.8.0
 plyfile
 HTML4Vision
 tensorboardX
